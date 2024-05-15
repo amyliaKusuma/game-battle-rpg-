@@ -1,31 +1,77 @@
-public class Character {
-    protected String nama;
-    protected String ras;
-    protected int hp;
-    protected int mp;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Character(String nama, String ras, int hp, int mp) {
-        this.nama = nama;
-        this.ras = ras;
-        this.hp = hp;
-        this.mp = mp;
+// Kelas abstrak Character sebagai superclass dari Hero dan Foe
+public abstract class Character {
+    protected int healthPoint;
+    protected int magicPoint;
+    protected List<Status> statuses;
+
+    // Constructor
+    public Character(int healthPoint, int magicPoint) {
+        this.healthPoint = healthPoint;
+        this.magicPoint = magicPoint;
+        this.statuses = new ArrayList<>();
     }
 
-    public void attack(Character opponent) {
-        // implementasi serangan. Misalnya, mengurangi HP lawan berdasarkan AP senjata
+    // Abstract method untuk menyerang lawan
+    public abstract void attack(Character opponent);
+
+    // Abstract method untuk menggunakan skill
+    public abstract void useSkill(Character opponent);
+
+    // Abstract method untuk menggunakan item
+    public abstract void useItem(Item item);
+
+    // Method untuk menerima damage
+    public void takeDamage(int damage) {
+        healthPoint -= damage;
     }
 
-    public void useItem(Item item) {
-        // implementasi penggunaan item. Misalnya, menambah HP/MP karakter berdasarkan jenis item
+    // Method untuk menerima efek status
+    public void applyStatus(Status status) {
+        statuses.add(status);
     }
 
-    public void increaseHP(int amount) {
-        // implementasi peningkatan HP
-        this.hp += amount;
+    // Method untuk menghapus status
+    public void removeStatus(Status status) {
+        statuses.remove(status);
     }
 
-    public void increaseMP(int amount) {
-        // implementasi peningkatan MP
-        this.mp += amount;
+    // Method untuk menggunakan item Remedy
+    public void useRemedy() {
+        statuses.clear(); // Menghapus semua jenis status
+    }
+
+    // Method untuk menggunakan item Antidote
+    public void useAntidote() {
+        statuses.removeIf(status -> status instanceof Poison); // Menghapus status Poison
+    }
+
+    // Getters dan setters
+    public int getHealthPoint() {
+        return healthPoint;
+    }
+
+    public void setHealthPoint(int healthPoint) {
+        this.healthPoint = healthPoint;
+    }
+
+    public int getMagicPoint() {
+        return magicPoint;
+    }
+
+    public void setMagicPoint(int magicPoint) {
+        this.magicPoint = magicPoint;
+    }
+
+    public List<Status> getStatuses() {
+        return statuses;
+    }
+
+    public void setStatuses(List<Status> statuses) {
+        this.statuses = statuses;
     }
 }
+
+//Amylia Kusuma - Fahri Hanafi
